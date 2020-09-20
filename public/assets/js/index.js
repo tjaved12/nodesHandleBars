@@ -147,5 +147,10 @@ $noteList.on("click", ".delete-note", handleNoteDelete);
 //$noteTitle.on("keyup", handleRenderSaveBtn);
 $noteText.on("keyup", handleRenderSaveBtn);
 
+//devour button
+$(".btn").on("click", function(event){
+  event.preventDefault()
+  alert("buttom clicked")
+})
 // Gets and renders the initial list of notes
 getAndRenderNotes();
