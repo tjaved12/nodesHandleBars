@@ -1,0 +1,53 @@
+
+
+<nav class="navbar navbar-dark bg-dark">
+    </h4 class="navbar-brand" href="/">My Favourite Burger
+    </h4>
+  </nav>
+  <div class="container-fluid">
+      <div class="row">
+ <div class="col-2 list-container">
+        <div class="card">
+          <h4 class="list-group"> List of Selected Burgers</h4>
+   
+  {{#each burger}}
+  	<ol>
+  	   <p>ID: {{this.id}}</p>
+       <p>Burger: {{this.burger_name}}</p>
+       <form action="/burger/save/update" method="POST">
+    <button class="btn" name="true"><i class="fas fa-hamburger"></i> Devoured</button>
+    </form>
+  	</ol>
+  {{/each}}
+</>
+
+     </div>
+      </div>
+            <div class="col-8 main-container">
+    <div style="margin-top: 80px;" class="jumbotron text-center">
+      <h1 class="display-4">Burger Express</h1>
+      <h4 class="mt-4"></h4>
+      
+
+<form action="/burger/save" method="POST">
+  <input id ="inputSymbol"class="form-control mr-sm-4" type="text" name="task" placeholder="Burger Name Please" aria-label="Enter type">
+	   <button type="submit" class="btn btn-primary btn-lg mt-4"> Submit</button>
+</form>
+       
+  </div>
+     </div>
+     <div class="col-2 list-container">
+        <div class="card">
+          <h4 class="list-group"> List of Devoured Burgers</h4>
+    
+  {{#each burger}}
+  	<ol>
+  	   <p>ID: {{this.id}}</p>
+       <p>Burger: {{this.burger_name}}</p>
+  	</ol>
+  {{/each}}
+  </div>
+      </div>
+</>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script scr ="./index.js"
