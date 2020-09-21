@@ -1,4 +1,5 @@
-var connection = require("./Config/connection.js");
+// defining dependencies
+var connection = require("./connection.js");
 var express = require("express");
 var exphbs = require("express-handlebars");
 var mysql = require("mysql");
@@ -29,8 +30,8 @@ app.set("view engine", "handlebars");
 // The ? signs are for swapping out other values
 // These help avoid SQL injection
 // https://en.wikipedia.org/wiki/SQL_injection
+
 var orm = {
- 
    
   findandReplace: function(whatToSelect, table,column) {
     var queryString = "SELECT ? FROM ?? WHERE ??";
@@ -65,14 +66,10 @@ app.get("/burger", function (req, res) {
   });
 });
 
-
-
 app.post("/burger/save", function (req, res) {
 
   // Test it
   console.log('You sent, ' + req.body.task);
-
-
   connection.query("INSERT INTO burger (burger_name) VALUES (?)", [req.body.task], function (err, result) {
     if (err) throw err;
 
@@ -83,8 +80,6 @@ app.post("/burger/save/update", function (req, res) {
 
   // Test it
   console.log('You sent, ' + req.body.true);
-
-
   connection.query("UPDATE burger SET devoured = 1 WHERE devoured = 0", function (err, result) {
     if (err) throw err;
 
@@ -95,14 +90,11 @@ app.post("/burger/save/update", function (req, res) {
 app.listen(PORT, function () {
   console.log("App listening on localhost: " + PORT);
 });
+
+
 module.exports = orm;
 
 
-// Object Relational Mapper (ORM)
 
-// The ?? signs are for swapping out table or column names
-// The ? signs are for swapping out other values
-// These help avoid SQL injection
-// https://en.wikipedia.org/wiki/SQL_injection
 
    
