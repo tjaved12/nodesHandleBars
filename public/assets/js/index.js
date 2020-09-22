@@ -84,9 +84,11 @@ $devouredBtn.on("click", handleNoteSave);
 $noteText.on("keyup", handleRenderSaveBtn);
 
 //devour button
-$(".btn").on("click", function(event){
+$devouredBtn.on("click", function(event){
   event.preventDefault()
   alert("buttom clicked")
 })
 // Gets and renders the initial list of notes
+console.log("7897897897897" + burger.devoured)
+
 getAndRenderNotes();

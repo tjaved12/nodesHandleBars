@@ -11,13 +11,15 @@
           <h3 class="list-group"> List of Selected Burgers</h3>
    
   {{#each burger}}
+  {{#unless devoured}}
   	<ol>
   	   <p>ID: {{this.id}}</p>
        <p>Burger: {{this.burger_name}}</p>
-       <form action="/burger/save/update" method="POST">
-    <button class="update" name="true"><i class="fas fa-hamburger"></i> Devoured</button>
+      
+    <button class="update" burgerid={{this.id}}><i class="fas fa-hamburger"></i> Devoured</button>
     </form>
   	</ol>
+{{/unless}}
   {{/each}}
 </>
 
@@ -40,14 +42,36 @@
         <div class="card">
           <h3 class="list-group"> List of Devoured Burgers</h3>
     <form action="/burger/save" method="POST"></form>
-  {{#each burger}}
+  {{#each burger  }}
+  {{#if devoured}}
   	<ol>
   	   <p>ID: {{this.id}}</p>
        <p>Burger: {{this.burger_name}}</p>
+       
   	</ol>
+    {{/if}}
   {{/each}}
   </div>
       </div>
 </>
+
+
+ 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script scr ="./index.js"
+ <script>
+$(".update").on("click", function(){
+var id = $(this).attr("burgerid")
+var url= "/burger/save/"+id
+console.log(url)
+$.ajax({
+  url: url,
+  method: "PUT"
+}).then(function(data){
+  console.log("back")
+  location.reload()
+})
+ 
+})
+
+
+ </script>

@@ -32,21 +32,21 @@ app.set("view engine", "handlebars");
 // https://en.wikipedia.org/wiki/SQL_injection
 
 var orm = {
-   
-  findandReplace: function(whatToSelect, table,column) {
+
+  findandReplace: function (whatToSelect, table, column) {
     var queryString = "SELECT ? FROM ?? WHERE ??";
     console.log(queryString);
-    connection.query(queryString, [whatToSelect, table, column], function(err, data) {
+    connection.query(queryString, [whatToSelect, table, column], function (err, data) {
       if (err) throw err;
       console.log(data);
     });
   },
-  selectWhere: function(tableInput) {
+  selectWhere: function (tableInput) {
     var queryString = "SELECT * FROM ??";
-    connection.query(queryString, [tableInput], function(err, result) {
+    connection.query(queryString, [tableInput], function (err, result) {
       if (err) throw err;
-    
-          console.log(result);
+
+      console.log(result);
     });
   },
 };
@@ -62,9 +62,12 @@ app.get("/burger", function (req, res) {
     //return res.send(data);
 
     res.render("all-favourite", {
-      burger: data    });
+      burger: data,
+    });
   });
 });
+
+
 
 app.post("/burger/save", function (req, res) {
 
@@ -76,14 +79,14 @@ app.post("/burger/save", function (req, res) {
     res.redirect("/burger");
   });
 });
-app.post("/burger/save/update", function (req, res) {
+app.put("/burger/save/:id", function (req, res) {
 
   // Test it
-  console.log('You sent, ' + req.body.true);
-  connection.query("UPDATE burger SET devoured = 1 WHERE devoured = 0", function (err, result) {
+  console.log('You sent id, ', req.params, req.body);
+  connection.query("UPDATE burger SET devoured = 1 WHERE id =" + req.params.id, function (err, result) {
     if (err) throw err;
-
-    res.redirect("/burger");
+res.json(result)
+   // res.redirect("/burger");
   });
 });
 
@@ -93,8 +96,3 @@ app.listen(PORT, function () {
 
 
 module.exports = orm;
-
-
-
-
-   
