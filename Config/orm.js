@@ -1,98 +1,121 @@
-// defining dependencies
+// Import MySQL connection.
 var connection = require("./connection.js");
-var express = require("express");
-var exphbs = require("express-handlebars");
-var mysql = require("mysql");
 
-var app = express();
+// Helper function for SQL syntax.
+// Let's say we want to pass 3 values into the mySQL query.
+// In order to write the query, we need 3 question marks.
+// The above helper function loops through and creates an array of question marks - ["?", "?", "?"] - and turns it into a string.
+// ["?", "?", "?"].toString() => "?,?,?";
+function printQuestionMarks(num) {
+  var arr = [];
 
+  for (var i = 0; i < num; i++) {
+    arr.push("?");
+  }
 
-app.use(express.static('public'))
-// Set the port of our application
-// process.env.PORT lets the port be set by Heroku
-var PORT = process.env.PORT || 8070;
+  return arr.toString();
+}
 
-// Sets up the Express app to handle data parsing
-app.use(express.urlencoded({
-  extended: true
-}));
-app.use(express.json());
+// Helper function to convert object key/value pairs to SQL syntax
+function objToSql(ob) {
+  var arr = [];
 
-app.engine("handlebars", exphbs({
-  defaultLayout: "main"
-}));
-app.set("view engine", "handlebars");
+  // loop through the keys and push the key/value as a string int arr
+  for (var key in ob) {
+    var value = ob[key];
+    // check to skip hidden properties
+    if (Object.hasOwnProperty.call(ob, key)) {
+      // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
+      if (typeof value === "string" && value.indexOf(" ") >= 0) {
+        value = "'" + value + "'";
+      }
+      // e.g. {name: 'Lana Del Grey'} => ["name='Lana Del Grey'"]
+      // e.g. {sleepy: true} => ["sleepy=true"]
+      arr.push(key + "=" + value);
+    }
+  }
 
+  // translate array of strings to a single comma-separated string
+  return arr.toString();
+}
 
-// Object Relational Mapper (ORM)
-
-// The ?? signs are for swapping out table or column names
-// The ? signs are for swapping out other values
-// These help avoid SQL injection
-// https://en.wikipedia.org/wiki/SQL_injection
-
+// Object for all our SQL statement functions.
 var orm = {
+  all: function(tableInput, cb) {
+    var queryString = "SELECT * FROM " + tableInput + ";";
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
+  create: function(table, cols, vals, cb) {
+    var queryString = "INSERT INTO " + table;
 
-  findandReplace: function (whatToSelect, table, column) {
-    var queryString = "SELECT ? FROM ?? WHERE ??";
+    queryString += " (";
+    queryString += "burger_name"
+    queryString += ") ";
+    queryString += "VALUE (";
+    queryString += printQuestionMarks(vals.length);
+    queryString += ") ";
+
     console.log(queryString);
-    connection.query(queryString, [whatToSelect, table, column], function (err, data) {
-      if (err) throw err;
-      console.log(data);
-    });
-  },
-  selectWhere: function (tableInput) {
-    var queryString = "SELECT * FROM ??";
-    connection.query(queryString, [tableInput], function (err, result) {
-      if (err) throw err;
 
-      console.log(result);
+    connection.query(queryString, vals, function(err, result) {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
     });
   },
+  // //INSERT INTO burger (burger_name) VALUES (?)", [req.body.task],
+  // create: function(burgerName, cb) {
+  //   var queryString = "INSERT INTO burger (burger_name) VALUE (?);"
+
+  //   connection.query(queryString, [burgerName], function(err, result) {
+  //     if (err) {
+  //       throw err;
+  //     }
+
+  //     cb(result);
+  //   });
+  // },
+  //UPDATE burger SET devoured = 1 WHERE id =" + req.params.id, 
+
+  // An example of objColVals would be {name: panther, sleepy: true}
+  update: function(table, condition, cb) {
+    var queryString = "UPDATE " + table;
+
+    queryString += " SET ";
+    queryString += "devoured = true";
+    queryString += " WHERE ";
+    queryString += condition;
+
+    console.log(queryString);
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
+    });
+  },
+  delete: function(table, condition, cb) {
+    var queryString = "DELETE FROM " + table;
+    queryString += " WHERE ";
+    queryString += condition;
+
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
+    });
+  }
 };
 
-app.get("/burger", function (req, res) {
-  connection.query("SELECT * FROM burger;", function (err, data) {
-    if (err) throw err;
-
-    //Test it
-    console.log('The solution is: ', data);
-
-    //Test it
-    //return res.send(data);
-
-    res.render("all-favourite", {
-      burger: data,
-    });
-  });
-});
-
-
-
-app.post("/burger/save", function (req, res) {
-
-  // Test it
-  console.log('You sent, ' + req.body.task);
-  connection.query("INSERT INTO burger (burger_name) VALUES (?)", [req.body.task], function (err, result) {
-    if (err) throw err;
-
-    res.redirect("/burger");
-  });
-});
-app.put("/burger/save/:id", function (req, res) {
-
-  // Test it
-  console.log('You sent id, ', req.params, req.body);
-  connection.query("UPDATE burger SET devoured = 1 WHERE id =" + req.params.id, function (err, result) {
-    if (err) throw err;
-res.json(result)
-   // res.redirect("/burger");
-  });
-});
-
-app.listen(PORT, function () {
-  console.log("App listening on localhost: " + PORT);
-});
-
-
+// Export the orm object for the model (cat.js).
 module.exports = orm;

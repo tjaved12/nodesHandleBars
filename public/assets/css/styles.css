@@ -7,6 +7,9 @@ body {
   padding: 0;
 }
 
+.navbar-brand{
+  text-align: center;
+}
 .card {
   background-color: rgba(207, 169, 91, 0.521) !important;
   border: black;
