@@ -1,13 +1,33 @@
 
 
-<nav class="navbar navbar-dark bg-dark">
-    <h1 class="navbar-brand">Eat-Da-Burger!
-    </h1>
-  </nav>
+<link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Gochi+Hand&display=swap" rel="stylesheet">
+
   <div class="container-fluid">
+          <header class="header">
+            <div class="container">
+              <div class ="row">
+                <div class ="col-lg-2">
+            <div class = "logo"> <br><br><br><br><br><br></div>
+
+                </div>
+                 <div class ="col-lg-8">
+                   <br>
+        <h1 class="display-3">Délicieux</h1>
+
+                </div>
+                 <div class ="col-lg-2">
+            <div class = "logo"> <br><br><br><br><br><br></div>
+
+                </div>
+              </div>
+            </div>
+
+            </div>
+          
       <div class="row">
  <div class="col-3 list-container">
         <div class="card">
+          <br><br>
           <h3 class="list-group"> List of Selected Burgers</h3>
    <br>
   {{#each burger}}
@@ -16,24 +36,47 @@
   	   <p>ID: {{this.id}}</p>
        <p>Burger: {{this.burger_name}}</p>
       
-    <button class="update" burgerid={{this.id}}><i class="fas fa-hamburger"></i> Devoured</button>
+    <button class="update" burgerid={{this.id}}><i class="fas fa-hamburger fa-spin"style="color:brown"></i>  Devour it!!!</button>
+  
     </form>
   	</ol>
 {{/unless}}
   {{/each}}
-</>
+
 
      </div>
       </div>
             <div class="col-6 main-container">
-    <div style="margin-top: 80px;" class="jumbotron text-center">
+    <div style="margin-top:0;""margin-bottom:0"; class="jumbotron text-center">
      <h1 class="display-4">Burger Express</h1>
-      <h3 class="mt-4"></h3>
-      
+      <h3 class="mt-4"></h3>    
 
 <form action="/burger" method="POST">
   <input id ="inputSymbol"class="form-control mr-sm-4" type="text" name="task" placeholder="Burger Name Please" aria-label="Enter type">
 	   <button type="submit" class="btn btn-primary btn-lg mt-4"> Submit</button>
+
+     <ol>
+       <br><br><br>
+        <h3>Chef's suggestions</h3>
+        <br><br>
+        <button type="button" class="btn btn-link" data-toggle="tooltip"data-html="true" data-placement="top" title=" CALORIES:400. Ingredients:ground beef,egg,minced onion, fine dried bread. ">
+ Burger Bistro <i class="fas fa-thumbs-up"style="color:brown"></i>
+</button><br>
+  <button type="button" class="btn btn-link" data-toggle="tooltip"data-html="true" data-placement="top" title=" CALORIES:400. Ingredients:Tofu,Onion,salad leaf,tomato. ">
+ The Garden Burger <i class="fas fa-hamburger"style="color:green"></i> 
+</button>
+<br>
+  <button type="button" class="btn btn-link" data-toggle="tooltip"data-html="true" data-placement="top" title=" CALORIES:500. Ingredients:Cheese, Chicken, Onion,tomato. ">
+ Classic Burger <i class="fas fa-hamburger"style="color:brown"></i>
+</button><br>
+  <button type="button" class="btn btn-link" data-toggle="tooltip"data-html="true" data-placement="top" title=" CALORIES:450. Ingredients:Cheese, ground Chicken, Onion,tomato.  ">
+The Shack Burger <i class='fas fa-hamburger' style='font-size:24px;color:red'></i>
+</button><br>
+<button type="button" class="btn btn-link" data-toggle="tooltip"data-html="true" data-placement="top" title=" CALORIES:600. Ingredients:Cheese, Pork, Onion,tomato. ">
+  The Slider Burger <i class='fas fa-hamburger' style='font-size:20px'></i>
+</button><br>
+       
+      </ol>
      
 </form>
        
@@ -41,6 +84,8 @@
      </div>
      <div class="col-3 list-container">
         <div class="card">
+                    <br><br>
+
           <h3 class="list-group"> List of Devoured Burgers</h3>
           <br>
     <form action="/burger/save/" method="POST"></form>
@@ -58,22 +103,27 @@
 </>
 
 
- 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script>
-$(".update").on("click", function(){
-var id = $(this).attr("burgerid")
-var url= "/burger/save/"+id
-console.log(url)
-$.ajax({
-  url: url,
-  method: "PUT"
-}).then(function(data){
-  console.log("back")
-  location.reload()
-})
+
+
+<script>
  
-})
+
+$(".update").on("click", function(){
+  //bleep.play();
+    var id = $(this).attr("burgerid")
+  var url= "/burger/save/"+id
+  console.log(url)
+  $.ajax({
+    url: url,
+    method: "PUT"
+  }).then(function(data){
+    console.log("back")
+    location.reload()
+  })
+   
+  });
+ 
 
 
- </script>
+</script>

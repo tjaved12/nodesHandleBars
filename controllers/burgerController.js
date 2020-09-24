@@ -2,35 +2,21 @@ var express = require("express");
 
 var router = express.Router();
 
-// Import the model (cat.js) to use its database functions.
+// Import the model (burger.js) to use its database functions.
 var burger= require("../models/burger.js");
 
 // Create all our routes and set up logic within those routes where required.
+//Get Route
 router.get("/", function(req, res) {
   burger.all(function(data) {
     var hbsObject = {
       burger: data
     };
-    // console.log(hbsObject);
+    console.log(hbsObject);
     res.render("all-favourite", hbsObject);
   });
 });
-// router.post("/burger/save", function(req, res) {
-//   console.log('You sent, ' + req.body.task); 
- 
-//    burger.create(["burger_name"],[req.body.task], function (err, result) {
-//        if (err) throw err;
-//        res.json({ id: result.insertId });
-//    });
-//  });
-// router.post("/", function(req, res) {
-//   console.log('You sent, ' + req.body.task); 
-//    burger.create(["burger_name"],[req.body.task], function (err, result) {
-//        if (err) throw err;
-//        res.redirect("/");
-//    });
-//  });
-
+//Posting to DB
 router.post("/burger", function(req, res) {
   burger.create(["burger_name"],[req.body.task],
     function (result) {
@@ -38,7 +24,7 @@ router.post("/burger", function(req, res) {
     });
 });
 
-
+//Updating the DB
 router.put("/burger/save/:id", function(req, res) {
  
   var condition = "id = " + req.params.id;
@@ -54,10 +40,6 @@ router.put("/burger/save/:id", function(req, res) {
     }
   });
 });
-  //     // If no rows were changed, then the ID must not exist, so 404
-  //     console.log(result);
-  //     res.sendStatus(200);
-  //   });
-
+ 
 // Export routes for server.js to use.
 module.exports = router;
