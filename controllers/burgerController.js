@@ -15,19 +15,29 @@ router.get("/", function(req, res) {
     res.render("all-favourite", hbsObject);
   });
 });
-
 router.post("/burger/save", function(req, res) {
   burger.create(["burger_name"],[req.body.task],
         // Test it
- console.log('You sent, ' + req.body.task),
-  
+ () => console.log('You sent, ' + req.body.task),
     // Send back the ID of the new quote
     function (err, result) {
       if (err) throw err;
-  
       res.json({ id: result.insertId });
   });
     });
+
+// router.post("/burger", function(req, res) {
+//   burger.create(["burger_name"],[req.body.task],
+//         // Test it
+//  //console.log('You sent, ' + req.body.task),
+  
+//     // Send back the ID of the new quote
+//     function (err, result) {
+//       if (err) throw err;
+  
+//       res.json({ id: result.insertId });
+//   });
+//     });
 
 
 router.put("/burger/save/:id", function(req, res) {
