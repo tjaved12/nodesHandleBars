@@ -11,33 +11,32 @@ router.get("/", function(req, res) {
     var hbsObject = {
       burger: data
     };
-    console.log(hbsObject);
+    // console.log(hbsObject);
     res.render("all-favourite", hbsObject);
   });
 });
-router.post("/burger/save", function(req, res) {
-  burger.create(["burger_name"],[req.body.task],
-        // Test it
- () => console.log('You sent, ' + req.body.task),
-    // Send back the ID of the new quote
-    function (err, result) {
-      if (err) throw err;
-      res.json({ id: result.insertId });
-  });
-    });
+// router.post("/burger/save", function(req, res) {
+//   console.log('You sent, ' + req.body.task); 
+ 
+//    burger.create(["burger_name"],[req.body.task], function (err, result) {
+//        if (err) throw err;
+//        res.json({ id: result.insertId });
+//    });
+//  });
+// router.post("/", function(req, res) {
+//   console.log('You sent, ' + req.body.task); 
+//    burger.create(["burger_name"],[req.body.task], function (err, result) {
+//        if (err) throw err;
+//        res.redirect("/");
+//    });
+//  });
 
-// router.post("/burger", function(req, res) {
-//   burger.create(["burger_name"],[req.body.task],
-//         // Test it
-//  //console.log('You sent, ' + req.body.task),
-  
-//     // Send back the ID of the new quote
-//     function (err, result) {
-//       if (err) throw err;
-  
-//       res.json({ id: result.insertId });
-//   });
-//     });
+router.post("/burger", function(req, res) {
+  burger.create(["burger_name"],[req.body.task],
+    function (result) {
+            res.redirect("/");
+    });
+});
 
 
 router.put("/burger/save/:id", function(req, res) {

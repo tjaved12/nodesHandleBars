@@ -31,7 +31,7 @@
       <h3 class="mt-4"></h3>
       
 
-<form action="/burger/save" method="POST">
+<form action="/burger" method="POST">
   <input id ="inputSymbol"class="form-control mr-sm-4" type="text" name="task" placeholder="Burger Name Please" aria-label="Enter type">
 	   <button type="submit" class="btn btn-primary btn-lg mt-4"> Submit</button>
      
@@ -43,7 +43,7 @@
         <div class="card">
           <h3 class="list-group"> List of Devoured Burgers</h3>
           <br>
-    <form action="/burger/save" method="POST"></form>
+    <form action="/burger/save/" method="POST"></form>
   {{#each burger  }}
   {{#if devoured}}
   	<ol>

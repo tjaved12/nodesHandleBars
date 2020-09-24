@@ -6,7 +6,7 @@ use burger_db;
 create table burger(
     id int not null AUTO_INCREMENT,
     burger_name varchar(30),
-    devoured Boolean,
+    devoured Boolean DEFAULT false,
     PRIMARY Key(id)
 );
 

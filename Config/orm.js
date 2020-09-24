@@ -54,17 +54,19 @@ var orm = {
     var queryString = "INSERT INTO " + table;
 
     queryString += " (";
-    queryString += "burger_name"
+    queryString += cols.toString()
     queryString += ") ";
     queryString += "VALUE (";
     queryString += printQuestionMarks(vals.length);
     queryString += ") ";
 
     console.log(queryString);
-
+    console.log(vals);
+    
     connection.query(queryString, vals, function(err, result) {
+      console.log(result);
       if (err) {
-        throw err;
+        console.log(err);
       }
 
       cb(result);
