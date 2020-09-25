@@ -110,6 +110,7 @@ The Shack Burger <i class='fas fa-hamburger' style='font-size:24px;color:red'></
  
 
 $(".update").on("click", function(){
+  event.preventDefault()
   //bleep.play();
     var id = $(this).attr("burgerid")
   var url= "/burger/save/"+id

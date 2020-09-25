@@ -72,21 +72,7 @@ var orm = {
       cb(result);
     });
   },
-  // //INSERT INTO burger (burger_name) VALUES (?)", [req.body.task],
-  // create: function(burgerName, cb) {
-  //   var queryString = "INSERT INTO burger (burger_name) VALUE (?);"
-
-  //   connection.query(queryString, [burgerName], function(err, result) {
-  //     if (err) {
-  //       throw err;
-  //     }
-
-  //     cb(result);
-  //   });
-  // },
-  //UPDATE burger SET devoured = 1 WHERE id =" + req.params.id, 
-
-  // An example of objColVals would be {name: panther, sleepy: true}
+ 
   update: function(table, condition, cb) {
     var queryString = "UPDATE " + table;
 
@@ -104,20 +90,8 @@ var orm = {
       cb(result);
     });
   },
-  delete: function(table, condition, cb) {
-    var queryString = "DELETE FROM " + table;
-    queryString += " WHERE ";
-    queryString += condition;
 
-    connection.query(queryString, function(err, result) {
-      if (err) {
-        throw err;
-      }
-
-      cb(result);
-    });
-  }
 };
 
-// Export the orm object for the model (cat.js).
+// Export the orm object for the model (burger.js).
 module.exports = orm;

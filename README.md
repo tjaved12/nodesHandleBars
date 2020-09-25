@@ -1,6 +1,7 @@
 # Node Express sHandleBars
 
-### Description:
+### Description
+
 The assignment was to create, a burger logger with MySQL, Node, Express, Handlebars and a homemade ORM.  MVC design pattern was to be followed and used Node and MySQL to query and route data in the app, and Handlebars to generate the HTML.
 
 
@@ -16,7 +17,13 @@ The assignment was to create, a burger logger with MySQL, Node, Express, Handleb
 
 ### Demo
 
+![image](https://user-images.githubusercontent.com/66760710/94205511-6ebfd480-fe91-11ea-9e5f-cbfeb8ec8a45.png)
+
 ### Go live
 
 ### Tech Stack
 
+* MVC
+* ORM
+* Node Express
+* Handle bars
